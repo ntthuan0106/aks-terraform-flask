@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  vote:
+    image: acrthuantest.azurecr.io/vote-app/vote:v1
+    build:
+      context: ./vote
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_APP=vote_app
+      - FLASK_RUN_HOST=0.0.0.0
+    depends_on:
+      - results
+  results:
+    image: acrthuantest.azurecr.io/vote-app/results:v1
+    build:
+      context: ./results
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5001"
+    environment:
+      - FLASK_APP=results_app.py
+      - FLASK_RUN_HOST=0.0.0.0
+
